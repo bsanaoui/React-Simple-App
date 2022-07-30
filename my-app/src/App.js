@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Test from './Test'
 
 function formatName(user) {
 	if (user)
@@ -18,15 +19,6 @@ const element = (
 	</h3>
 );
 
-function tick() {
-	const element1 = (
-		<div>
-			<h1>Hello, world!</h1>
-			<h2>It is {new Date().toLocaleTimeString()}.</h2>
-		</div>
-	);
-	root.render(element1);
-}
 
 function App() {
 	return (
@@ -48,7 +40,7 @@ function App() {
 				{/* My tests here */}
 				<div>
 					{element}
-					{setInterval(tick, 1000)}
+					<Test/>
 				</div>
 				{/* End tests */}
 
