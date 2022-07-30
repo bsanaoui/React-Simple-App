@@ -1,3 +1,41 @@
+import React from 'react';
+
+// =========================== States Test =============================== //
+class Clock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { date: new Date()};
+    }
+
+    componentDidMount() {
+        setInterval(
+            () => this.tick(), // pass funtion and this.tick() , means pass return value of function
+            1000
+        );
+    }
+
+    componentWillUnmount() {
+        // clearInterval(this.timerID);
+    }
+
+    tick() {
+        this.setState({ // send object
+            date: new Date()
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <h4>It is {this.state.date.toLocaleTimeString()}</h4>
+            </div>
+        );
+    }
+}
+
+
+// ========================= Props and Component Tests =================== //
+
 function formatDate(date) {
     return date.toLocaleDateString();
 }
@@ -47,10 +85,13 @@ const comment = {
 
 function Test() {
     return (
-        <Comment
-            date={comment.date}
-            text={comment.text}
-            author={comment.author} />
+        <div>
+            <Comment
+                date={comment.date}
+                text={comment.text}
+                author={comment.author} />
+            <Clock />
+        </div>
     );
 }
 

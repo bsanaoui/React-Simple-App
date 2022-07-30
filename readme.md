@@ -186,6 +186,107 @@ function App() {
 ```
 
 `* Extracting Components:`
-- Ex: in 'Comment component' in file [Test.js]() 
+- Ex: in 'Comment component' in file [Test.js](https://github.com/bsanaoui/React-Simple-App/blob/master/my-app/src/Test.js) 
   
 `* Props are Read-Only:`
+- All React components must act like `pure functions` with respect to their props.
+- `pure functions:` do not attempt to change their inputs, and return the same result for the same inputs.
+  
+
+# State and Lifecycle:
+
+State is similar to props, but it is private and fully controlled by the component.
+
+`* Adding Local State to a Class:`
+1. Replace this.props.date with this.state.date in the render() method.
+2. Add a class constructor that assigns the initial this.state.
+```
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clock />);
+```
+
+`* Adding Lifecycle Methods to a Class:`
+
+- Ex: in 'Clock component' in file [Test.js](https://github.com/bsanaoui/React-Simple-App/blob/master/my-app/src/Test.js)
+
+- In applications with many components, it’s very important to free up resources taken by the components when they are destroyed.
+
+- `Mounting in React:` like we want to set up a timer whenever the Clock is rendered to the DOM for the first time:
+	- `ComponentDidMount()` method runs after the component output has been rendered to the DOM.
+
+- `Unmounting in React:` like we want to clear that timer whenever the DOM produced by the Clock is removed:
+
+- `setState()` : call, React knows the state has changed, and calls the render() method again to learn what should be on the screen.
+
+`* Using State Correctly:`
+
+1. Do Not Modify State Diretly. use `setState()`. The only place where you can assign `this.state` is the `constructor`.
+
+
+2. State Updates May Be Asynchronous :
+	Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.
+	Use object is wrong in this example:
+	```
+	this.setState({
+		counter: this.state.counter + this.props.increment,
+	});
+	```
+
+	We can fixed by send function not object to setState:
+	```
+	this.setState(function(state, props) {
+		return {
+			counter: state.counter + props.increment
+		};
+	});
+
+	```
+
+3. State Updates are Merged:
+   When you call setState(), React merges the object you provide into the current state.
+   Ex:
+   ```
+   this.state = {
+	posts:[],
+	comments:[]
+   };
+   ```
+
+   We can update the with separete `setState` calls:
+   ```
+    this.setState({
+        posts: response.posts
+    });
+	this.setState({
+        comments: response.comments
+    });
+   ```
+
+`* The Data Flows Down:`
+
+- The state is not accessible to any component other than the one that owns and sets it.
+  
+- A component may choose to pass its state down as props to its child components:
+	```
+	<FormattedDate date={this.state.date} />
+	```
+
+
+# Handling Events:
+
