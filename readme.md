@@ -418,6 +418,22 @@ function NumberList(props) {
 
 # Forms:
 
+`* Controlled Components`
+- < input>, < textarea>, and < select> in HTML maintain their own state and update it base on user input.
+- but in React we can only update them with `setState()`.
+
+
+`* The <Textarea> <select> <input> Tag`
+- Ex: [React JS Documentation](https://reactjs.org/docs/forms.html)
+
+
+`* Fully-Fledged Solutions`
+- Validation, keeping track of the visited fields, and handling form submission, [Formik](https://formik.org/) is one of the popular choices.
+
+
+
+# Lifting State Up:
+
 
 
 

@@ -1,16 +1,44 @@
 import React from 'react';
 
+// ============================== Forms : ================================= //
+class NameForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { value: '' };
+    }
+
+    handleChange = (event) => {
+        this.setState({ value: event.target.value });
+    };
+
+    handleSubmit = (event) => {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault(); // prevent a browser reload/refresh
+    };
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+
 // =========================== Lists And Keys: ============================ //
-function ListItem (props)
-{
+function ListItem(props) {
     return <li>{props.value}</li>
 }
 
 function NumberList(props) {
     const numbers = props.numbers;
     const listItems = numbers.map((number) =>
-        <ListItem key = {number.toString()}
-                value = {number}/>
+        <ListItem key={number.toString()}
+            value={number} />
     );
     return (
         <ul>
@@ -198,7 +226,8 @@ function Test() {
             <Clock />
             <Toggle />
             <LoginControl />
-            <NumberList numbers={[1,2,3,4,5]}/>
+            <NumberList numbers={[1, 2, 3, 4, 5]} />
+            <NameForm />
         </div>
     );
 }
