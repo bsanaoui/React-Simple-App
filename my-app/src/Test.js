@@ -1,21 +1,126 @@
 import React from 'react';
 
+// =========================== Lists And Keys: ============================ //
+function ListItem (props)
+{
+    return <li>{props.value}</li>
+}
+
+function NumberList(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) =>
+        <ListItem key = {number.toString()}
+                value = {number}/>
+    );
+    return (
+        <ul>
+            {listItems}
+        </ul>
+    );
+}
+
+// =========================== Conditional Rendring: ============================ //
+
+function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return <h3>Welcome back!</h3>;
+    }
+    return <h3>Please sign up.</h3>;
+}
+
+function LoginButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Login
+        </button>
+    );
+}
+
+function LogoutButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Logout
+        </button>
+    );
+}
+
+class LoginControl extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isLoggedIn: false };
+    }
+
+    handleLoginClick = () => {
+        this.setState({ isLoggedIn: true });
+    }
+
+    handleLogoutClick = () => {
+        this.setState({ isLoggedIn: false });
+    }
+
+    render() {
+        const isLoggedIn = this.state.isLoggedIn;
+        let button;
+        if (isLoggedIn) {
+            button = <LogoutButton onClick={this.handleLogoutClick} />;
+        } else {
+            button = <LoginButton onClick={this.handleLoginClick} />;
+        }
+
+        return (
+            <div>
+                <Greeting isLoggedIn={isLoggedIn} />
+                {button}
+            </div>
+        );
+    }
+}
+
+// =========================== Handling Event Test =============================== //
+
+class Toggle extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isToggleOn: true };
+
+        // This binding is necessary to make `this` work in the callback
+        // this.handleClick = this.handleClick.bind(this);
+    }
+
+    // handleClick () { // or handleClick = () => {}; this will binding without use bind above.
+    handleClick = (e) => {
+        console.log(e.type);
+        this.setState(prevState => ({
+            isToggleOn: !prevState.isToggleOn
+        }));
+    };
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+                {this.state.isToggleOn ? 'ON' : 'OFF'}
+            </button>
+        );
+    }
+}
+
 // =========================== States Test =============================== //
 class Clock extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { date: new Date()};
+        this.state = { date: new Date() };
     }
 
     componentDidMount() {
-        setInterval(
+        this.timerID = setInterval(
             () => this.tick(), // pass funtion and this.tick() , means pass return value of function
             1000
         );
     }
 
     componentWillUnmount() {
-        // clearInterval(this.timerID);
+        clearInterval(this.timerID);
     }
 
     tick() {
@@ -78,7 +183,7 @@ const comment = {
     date: new Date(),
     text: 'I hope you enjoy learning React!',
     author: {
-        name: 'Hello Kitty',
+        name: 'Hello there',
         avatarUrl: 'http://placekitten.com/g/64/64'
     }
 };
@@ -91,6 +196,9 @@ function Test() {
                 text={comment.text}
                 author={comment.author} />
             <Clock />
+            <Toggle />
+            <LoginControl />
+            <NumberList numbers={[1,2,3,4,5]}/>
         </div>
     );
 }

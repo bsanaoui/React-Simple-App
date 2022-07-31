@@ -290,3 +290,134 @@ root.render(<Clock />);
 
 # Handling Events:
 
+`* React events are named using camelCase, rather than lowercase.`
+  ```
+  <button onClick={activateLasers}>
+    Activate Lasers
+  </button>
+  ```
+
+  - Other example in the `Test.js`
+  
+`* bind method to this in react Component: `
+- `bind()` :
+  		method creates a new function that, when called, has its this keyword set to the provided value.
+
+  		When we don\`t bind function to this object of here class , the `this` object of instance class while be 	`undefinded` in this function.
+
+- Example of binding:
+	```
+	class Toggle extends React.Component {
+  	constructor(props) {
+    	super(props);
+    	this.state = {isToggleOn: true};
+
+    	// This binding is necessary to make `this` work in the callback
+    	this.handleClick = this.handleClick.bind(this);
+  	}}
+	```
+
+- Using `Public Class Field Syntax:`
+  ```
+  class LoggingButton extends React.Component {
+  // This syntax ensures `this` is bound within handleClick.
+  handleClick = () => {
+    console.log('this is:', this);
+  };}
+  ```
+
+`* Passing Arguments to Event Handlers:`
+
+- Ex:
+  ```
+	<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+	<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+  ```
+  
+
+# Conditional Rendring:
+
+* We can render only the component that we want.
+* We can you if statement.
+  
+`* Inline If with Logical && Operator:`
+```
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {unreadMessages.length > 0 &&
+        <h2>
+          You have {unreadMessages.length} unread messages.
+        </h2>
+      }
+    </div>
+  );
+```
+
+- It works because in JavaScript, `true && expression` always evaluates to `expression`, and false && expression always evaluates to false.
+- Therefore, if the `condition is true, the element right after && will appear in the output`. If it is false, React will ignore and skip it.
+
+
+`* Preventing Component from Rendering:`
+
+- Return null instead of it\`s rendred output.
+```
+function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
+
+  return (
+    <div className="warning">
+      Warning!
+    </div>
+  );
+}
+```
+
+
+# Lists And Keys:
+
+`* Rendering Multiple Components:`
+
+Ex: use `JS Map` and `Curly Braces`
+
+```
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((numbers) =>
+  <li>{numbers}</li>
+);
+```
+
+`* Basic List Component:`
+```
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <li key={number.toString()}>
+      {number}
+    </li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+```
+
+`* Extracting Component with keys:`
+- Keys help React identify each item have changed, are added, or are removed.
+- You must send it key in props.
+```
+<ListItem key = {number.toString()}
+                value = {number}/>
+```
+
+`* Embedding map() in JSX.`
+
+
+
+# Forms:
+
+
+
+
