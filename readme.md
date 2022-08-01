@@ -433,7 +433,108 @@ function NumberList(props) {
 
 
 # Lifting State Up:
+* Make states sync with each comoponents.
+* In React, sharing state is accomplished by moving it up to the `closest common ancestor` of the `components that need it`.
 
 
+# Composition vs Inheritance:
+* To fix some problem of Inheritance in React We can use instead of it the `Composition`.
+  
+`* Containement:`
+```
+function FancyBorder(props) {
+  return (
+    <div className={'FancyBorder FancyBorder-' + props.color}>
+      {props.children}
+    </div>
+  );
+}
+
+function WelcomeDialog() {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        Welcome
+      </h1>
+      <p className="Dialog-message">
+        Thank you for visiting our spacecraft!
+      </p>
+    </FancyBorder>
+  );
+}
+```
+- `props.children` contains it's childrens.
+  
+```
+<FancyBorder>
+  <childrens>
+  ...
+</FancyBorder>
+```
+
+- Example of chat/messages UI:
+- Ex: [React JS Documentation](https://reactjs.org/docs/composition-vs-inheritance.html)
 
 
+`* Specialization:`
+
+- Sometimes we think about components as being “special cases” of other components. 
+- In React, this is also achieved by composition, where a more “specific” component renders a more “generic” one and configures it with props:
+  
+```
+function Dialog(props) {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        {props.title}
+      </h1>
+      <p className="Dialog-message">
+        {props.message}
+      </p>
+    </FancyBorder>
+  );
+}
+
+function WelcomeDialog() {
+  return (
+    <Dialog
+      title="Welcome"
+      message="Thank you for visiting our spacecraft!" />
+  );
+}
+```
+
+# Thinking in React:
+`* Start With A Mock:`
+- Imagine that we already have a JSON API and a mock from our designer. The mock looks like.
+```
+[
+  {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+  {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+  {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+  {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+  {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+  {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+];
+```
+
+`* Step 1: Break the UI to A Cmoponent Hierarchy`
+- Techniques for deciding if you should create a new function or object is single `responsibility principle`.
+
+`* Step 2: Build A static version of React`
+- `Don’t use state at all to build this static version`. State is reserved only for interactivity, 
+
+
+`* Step 3: Identify The Minimal (but complete) Representation Of UI State`
+
+- If the list is passed so it is probably a `props`:
+
+  1. Is it passed in from a parent via props? If so, it probably isn’t state.
+  2. Does it remain unchanged over time? If so, it probably isn’t state.
+  3. Can you compute it based on any other state or props in your component? If so, it isn’t state.
+
+`* Step 4: Identify Where your state shoul live:`
+- This is often the most challenging part for newcomers to understand.
+[React JS Documentation](https://reactjs.org/docs/thinking-in-react.html)
+
+`* Add Inverse Data Flow`
